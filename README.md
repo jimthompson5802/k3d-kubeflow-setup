@@ -37,6 +37,40 @@ Server Version: version.Info{Major:"1", Minor:"21", GitVersion:"v1.21.2+k3s1", G
 
 git clone https://github.com/jimthompson5802/manifests.git
 ```
+Note: created branch "my_customization" for changes required for my setup. Here is
+summary of changes made
+```
+Jim-MacBook-Pro:jim kubeflow-manifests[524]$ git status
+On branch my_customizations
+nothing to commit, working tree clean
+Jim-MacBook-Pro:jim kubeflow-manifests[525]$ git diff master
+diff --git a/common/dex/base/deployment.yaml b/common/dex/base/deployment.yaml
+index eca0a30a..a0972dc3 100644
+--- a/common/dex/base/deployment.yaml
++++ b/common/dex/base/deployment.yaml
+@@ -28,6 +28,11 @@ spec:
+         envFrom:
+           - secretRef:
+               name: dex-oidc-client
++        env:
++          - name: KUBERNETES_POD_NAMESPACE
++            valueFrom:
++              fieldRef:
++                fieldPath: metadata.namespace
+       volumes:
+       - name: config
+         configMap:
+diff --git a/common/user-namespace/base/params.env b/common/user-namespace/base/params.env
+index 9459383c..d1e3195b 100644
+--- a/common/user-namespace/base/params.env
++++ b/common/user-namespace/base/params.env
+@@ -1,2 +1,2 @@
+ user=user@example.com
+-profile-name=kubeflow-user-example-com
++profile-name=kubeflow-user
+
+```
+
 
 ## create k3d cluster
 ```
@@ -48,8 +82,7 @@ k3d cluster create kubeflow
 
 ## deploy kubeflow components from the downloaded manifest profile
 
-Note: created branch "my_customization" for changes required for my setup.  Run each
-`kustomize`  command one at a time.  This takes 45+ minutes on a mid-2014
+Run each  `kustomize`  command one at a time.  This takes 45+ minutes on a mid-2014
 MBP with 16GB RAM.
 
 ```
