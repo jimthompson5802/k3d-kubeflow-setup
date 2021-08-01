@@ -1,8 +1,8 @@
 # Testing of k3d docker-based kubernetes cluster for kubeflow
 
 ## References
-https://k3d.io
-https://github.com/kubeflow/manifests
+* https://k3d.io
+* https://github.com/kubeflow/manifests
 
 ## Install instructions for k3d
 ```
