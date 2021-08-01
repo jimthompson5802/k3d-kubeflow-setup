@@ -89,8 +89,9 @@ kustomize build common/istio-1-9/kubeflow-istio-resources/base | kubectl apply -
 
 # kubeflow pipelines (multi-user) (had to re-run multiple times to ensure proper start up)
 # this takes 20+ minutes
-# stop/start cluster to allow kubectl command to not hang
-kustomize build apps/pipeline/upstream/env/platform-agnostic-multi-user | kubectl apply -f -
+# May need to do `k3d cluster stop/start` to allow kubectl command to not hang
+# pns exeuctor required for pipelines, docker executor not supported in k3d environment
+kustomize build apps/pipeline/upstream/env/platform-agnostic-multi-user-pns | kubectl apply -f -
 
 
 # KFServing
@@ -149,13 +150,13 @@ kustomize build common/user-namespace/base | kubectl apply -f -
 
 
 # check if all components are running, all pods should be in 'Running' state
-kubectl get pods -n cert-manager
-kubectl get pods -n istio-system
-kubectl get pods -n auth
-kubectl get pods -n knative-eventing
-kubectl get pods -n knative-serving
-kubectl get pods -n kubeflow
-kubectl get pods -n kubeflow-user
+echo -e "\ncert-manager"; kubectl get pods -n cert-manager
+echo -e "\nistio-system"; kubectl get pods -n istio-system
+echo -e "\nauth"; kubectl get pods -n auth
+echo -e "\nknative-eventing"; kubectl get pods -n knative-eventing
+echo -e "\nknative-serving"; kubectl get pods -n knative-serving
+echo -e "\nkubeflow"; kubectl get pods -n kubeflow
+echo -e "\nkubeflow-user"; kubectl get pods -n kubeflow-user
 
 ```
 
