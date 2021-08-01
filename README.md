@@ -6,12 +6,14 @@
 
 ## Usage observations on MBP mid-2014(4-core, 8 vcpu), 16GB RAM, SSD >400GB Free
 * Memory demands significantly less compared to minikf (running in VirtualBox)
-* When deploying kubeflow pipeline component, cpu is pegged at close to 100% for about 20 minutes, best to to run other work during this period.
+* When deploying kubeflow pipeline component, cpu is pegged at close to 700% to 800% for about 20 minutes, best to to run other work during this period.
 * Able to stop and restart k3d cluster with `k3d cluster start ...` and `k3d cluster stop ...` commands
 * Cpu pegged 700% to 800% when restarting cluster for about 4 or 5 minutes, best not to run other work during this period.
 * Before install of kubeflow components, idle k3d cluster about 100% to 200% cpu busy on Mac Activity monitor.
 * After install of all Kubeflow components, idle kubeflow cluster shows between 200% to 300% cpu busy on Mac Activity Monitor with overall memory usage moderate, no memory pressure indicator.
 * first time start up of notebook server about 4 to 5 minutes, mainly due to download of notebook image.  cpu pegged close to 600% to 700% busy  Subsequent new notebooks with same image <1 minute.
+* Once notebook server is up and running, response time is good.
+* Some intermittent sluggishness in kubeflow dashboard, however, quite usable.
 
 ## Install instructions for k3d
 ```
@@ -21,6 +23,7 @@ curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | TAG=v4.4
 ## pre-reqs
 * Docker for Mac
 * `brew install`: `kubectl` and `kustomize` commands on Mac.
+
 ```
 kustomize version
 {Version:kustomize/v4.2.0 GitCommit:d53a2ad45d04b0264bcee9e19879437d851cb778 BuildDate:2021-07-01T00:44:28+01:00 GoOs:darwin GoArch:amd64}
@@ -37,8 +40,10 @@ Server Version: version.Info{Major:"1", Minor:"21", GitVersion:"v1.21.2+k3s1", G
 
 git clone https://github.com/jimthompson5802/manifests.git
 ```
+
 Note: created branch "my_customization" for changes required for my setup. Here is
-summary of changes made
+summary of changes.
+
 ```
 Jim-MacBook-Pro:jim kubeflow-manifests[524]$ git status
 On branch my_customizations
@@ -74,10 +79,8 @@ index 9459383c..d1e3195b 100644
 
 ## create k3d cluster
 ```
-
 # start a k3d cluster
 k3d cluster create kubeflow
-
 ```
 
 ## deploy kubeflow components from the downloaded manifest profile
@@ -211,6 +214,19 @@ kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
 
 ```
 
+## Screenshot of using kubeflow in k3d cluster
+### k3d cluster Running
+![k3d cluster list](./images/k3d-cluster-list.png)
+
+### Notebook server
+![notebook server list](./images/notebook-server-list.png)
+
+![notebook server instance](./images/notebook-server-instance.png)
+
+### Kubeflow pipelines
+![pipeline view 1](./images/pipeline-view-1.png)
+
+![pipeline view 2](./images/pipeline-view-2.png)
 
 
 ## Setp HTTPS (Note for future work)
