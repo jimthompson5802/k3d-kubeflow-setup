@@ -4,13 +4,23 @@
 * https://k3d.io
 * https://github.com/kubeflow/manifests
 
+## Usage observations on MBP mid-2014(4-core, 8 vcpu), 16GB RAM, SSD >400GB Free
+* Memory demands significantly less compared to minikf (running in VirtualBox)
+* When deploying kubeflow pipeline component, cpu is pegged at close to 100% for about 20 minutes, best to to run other work during this period.
+* Able to stop and restart k3d cluster with `k3d cluster start ...` and `k3d cluster stop ...` commands
+* Cpu pegged 700% to 800% when restarting cluster for about 4 or 5 minutes, best not to run other work during this period.
+* Before install of kubeflow components, idle k3d cluster about 100% to 200% cpu busy on Mac Activity monitor.
+* After install of all Kubeflow components, idle kubeflow cluster shows between 200% to 300% cpu busy on Mac Activity Monitor with overall memory usage moderate, no memory pressure indicator.
+* first time start up of notebook server about 4 to 5 minutes, mainly due to download of notebook image.  cpu pegged close to 600% to 700% busy  Subsequent new notebooks with same image <1 minute.
+
 ## Install instructions for k3d
 ```
 curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | TAG=v4.4.7 bash
 ```
 
 ## pre-reqs
-Pre-reqs:  `brew install`: `kubectl` and `kustomize` commands on Mac.
+* Docker for Mac
+* `brew install`: `kubectl` and `kustomize` commands on Mac.
 ```
 kustomize version
 {Version:kustomize/v4.2.0 GitCommit:d53a2ad45d04b0264bcee9e19879437d851cb778 BuildDate:2021-07-01T00:44:28+01:00 GoOs:darwin GoArch:amd64}
@@ -32,14 +42,14 @@ git clone https://github.com/jimthompson5802/manifests.git
 ```
 
 # start a k3d cluster
-k3d cluster create kf-cluster
+k3d cluster create kubeflow
 
 ```
 
 ## deploy kubeflow components from the downloaded manifest profile
 
 Note: created branch "my_customization" for changes required for my setup.  Run each
-`kuztomize`  command one at a time.  This takes 45+ minutes on a mid-2014
+`kustomize`  command one at a time.  This takes 45+ minutes on a mid-2014
 MBP with 16GB RAM.
 
 ```
