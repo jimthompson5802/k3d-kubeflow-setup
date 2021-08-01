@@ -14,6 +14,8 @@
 * first time start up of notebook server about 4 to 5 minutes, mainly due to download of notebook image.  cpu pegged close to 600% to 700% busy  Subsequent new notebooks with same image <1 minute.
 * Once notebook server is up and running, response time is good.
 * Some intermittent sluggishness in kubeflow dashboard, however, quite usable.
+* Intermittent disconnects with port forwarding especially during pod initialization where docker image is downloaded. Work-around: if port-forward command terminated, restart; close web page and reopen kubeflow web page.
+* with jupyter notebook server and codeserver notebook active at sametime, encountering insufficient memory issues.  For now need to run only one notebook server at a time.
 
 ## Install instructions for k3d
 ```
@@ -228,6 +230,18 @@ kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
 ![pipeline view 1](./images/pipeline-view-1.png)
 
 ![pipeline view 2](./images/pipeline-view-2.png)
+
+
+## Useful commands
+### Remove completed kubeflow pipeline pods
+```
+# Use this to see what pods will be deleted
+kubectl get pod  -l workflows.argoproj.io/completed=true --field-selector=status.phase==Succeeded
+
+# to remove the pods
+kubectl delete pod  -l workflows.argoproj.io/completed=true --field-selector=status.phase==Succeeded
+
+```
 
 
 ## Setp HTTPS (Note for future work)
