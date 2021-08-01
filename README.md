@@ -9,7 +9,7 @@ curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | TAG=v4.4
 ```
 
 ## set up kubeflow
-Pre-reqs
+Pre-reqs:  `brew install`: `kubectl` and `kustomize` commands on Mac.
 ```
 kustomize version
 {Version:kustomize/v4.2.0 GitCommit:d53a2ad45d04b0264bcee9e19879437d851cb778 BuildDate:2021-07-01T00:44:28+01:00 GoOs:darwin GoArch:amd64}
@@ -20,16 +20,30 @@ Server Version: version.Info{Major:"1", Minor:"21", GitVersion:"v1.21.2+k3s1", G
 
 ```
 
-
-'''
+## clone kubeflow's official manifests repo
+```
 # clone kubeflow manifest repo
 
 git clone https://github.com/kubeflow/manifests.git kubeflow-manifests
+```
 
+## create k3d cluster
+```
 
 # start a k3d cluster
 k3d cluster create kf-cluster
 
+```
+
+## deploy kubeflow components from the downloaded manifest profile
+
+Note: created branch "my_customization" for changes required.  Run each
+`kuztomize`  command one at a time.  This takes 45+ minutes on a mid-2014
+MBP with 16GB RAM.
+
+```
+# cd to kubeflow/manifest repo
+# git checkout "my_customization" branch
 
 # deploy each kubeflow service individually
 
@@ -133,7 +147,7 @@ kustomize build apps/xgboost-job/upstream/overlays/kubeflow | kubectl apply -f -
 kustomize build common/user-namespace/base | kubectl apply -f -
 
 
-# check if all components are running
+# check if all components are running, all pods should be in 'Running' state
 kubectl get pods -n cert-manager
 kubectl get pods -n istio-system
 kubectl get pods -n auth
@@ -145,6 +159,8 @@ kubectl get pods -n kubeflow-user
 ```
 
 ## Port forward
+After establishing port forwarding, access kubeflow dashboard
+`http://localhost:8080`
 ```
 kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
 
@@ -152,7 +168,7 @@ kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
 
 
 
-## Setp HTTPS
+## Setp HTTPS (Note for future work)
 Reference: setup up https for kubeflow:https://www.civo.com/learn/get-up-and-running-with-kubeflow-on-civo-kubernetes
 
 ```
