@@ -10,7 +10,7 @@
 * Able to stop and restart k3d cluster with `k3d cluster start ...` and `k3d cluster stop ...` commands
 * Cpu pegged 700% to 800% when restarting cluster for about 4 or 5 minutes, best not to run other work during this period.
 * Before install of kubeflow components, idle k3d cluster about 100% to 200% cpu busy on Mac Activity monitor.
-* After install of all Kubeflow components, idle kubeflow cluster shows between 200% to 300% cpu busy on Mac Activity Monitor with overall memory usage moderate, no memory pressure indicator.
+* After install of all Kubeflow components, idle kubeflow cluster shows between 100% to 200% cpu busy on Mac Activity Monitor with overall memory usage moderate, no memory pressure indicator.
 * first time start up of notebook server about 4 to 5 minutes, mainly due to download of notebook image.  cpu pegged close to 600% to 700% busy  Subsequent new notebooks with same image <1 minute.
 * Once notebook server is up and running, response time is good.
 * Some intermittent sluggishness in kubeflow dashboard, however, quite usable.
