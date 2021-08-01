@@ -208,7 +208,8 @@ echo -e "\nkubeflow-user"; kubectl get pods -n kubeflow-user
 
 ## Port forward
 After establishing port forwarding, access kubeflow dashboard
-`http://localhost:8080`
+`http://localhost:8080`.  Good enough for local development work for an individual,
+not suitable for any other uses.
 ```
 kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
 
