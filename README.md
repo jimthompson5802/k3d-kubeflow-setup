@@ -1,14 +1,15 @@
 # Testing of k3d docker-based kubernetes cluster for kubeflow
 
-## Reference
+## References
 https://k3d.io
+https://github.com/kubeflow/manifests
 
-## Install instructions
+## Install instructions for k3d
 ```
 curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | TAG=v4.4.7 bash
 ```
 
-## set up kubeflow
+## pre-reqs
 Pre-reqs:  `brew install`: `kubectl` and `kustomize` commands on Mac.
 ```
 kustomize version
@@ -20,11 +21,11 @@ Server Version: version.Info{Major:"1", Minor:"21", GitVersion:"v1.21.2+k3s1", G
 
 ```
 
-## clone kubeflow's official manifests repo
+## clone my fork of kubeflow/manifests repo
 ```
 # clone kubeflow manifest repo
 
-git clone https://github.com/kubeflow/manifests.git kubeflow-manifests
+git clone https://github.com/jimthompson5802/manifests.git
 ```
 
 ## create k3d cluster
@@ -37,7 +38,7 @@ k3d cluster create kf-cluster
 
 ## deploy kubeflow components from the downloaded manifest profile
 
-Note: created branch "my_customization" for changes required.  Run each
+Note: created branch "my_customization" for changes required for my setup.  Run each
 `kuztomize`  command one at a time.  This takes 45+ minutes on a mid-2014
 MBP with 16GB RAM.
 
