@@ -6,7 +6,7 @@
 
 ## Usage observations on MBP mid-2014(4-core, 8 vcpu), 16GB RAM, SSD >400GB Free
 * Memory demands significantly less compared to minikf (running in VirtualBox)
-* When deploying kubeflow pipeline component, cpu is pegged at close to 700% to 800% for about 20 minutes, best to to run other work during this period.
+* When deploying kubeflow pipeline component, cpu is pegged at close to 700% to 800% for about 20 minutes, best NOT to to run other work during this period.
 * Able to stop and restart k3d cluster with `k3d cluster start ...` and `k3d cluster stop ...` commands
 * Cpu pegged 700% to 800% when restarting cluster for about 4 or 5 minutes, best not to run other work during this period.
 * Before install of kubeflow components, idle k3d cluster about 100% to 200% cpu busy on Mac Activity monitor.
