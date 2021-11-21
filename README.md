@@ -17,9 +17,14 @@
 * Intermittent disconnects with port forwarding especially during pod initialization where docker image is downloaded. Work-around: if port-forward command terminated, restart; close web page and reopen kubeflow web page.
 * with jupyter notebook server and codeserver notebook active at sametime, encountering insufficient memory issues.  For now need to run only one notebook server at a time.
 
+## Usage observation on MBP 2019 (8-core, 16 vcpu), 16GB RAM, SSD > 400GB Free
+* Install of kubeflow components went by much quicker, longest duration is for the kubeflow resources.  Took roughly 15 minutes for all pods in kubeflow namespace to achieve `Running` state.  Much of the start-up delay due to first time download of images.
+* Able to start up to 5 notebook servers with cpu=2 and memory=1Gi requests.
+
+
 ## Install instructions for k3d
 ```
-curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | TAG=v4.4.7 bash
+curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
 ```
 
 ## pre-reqs
