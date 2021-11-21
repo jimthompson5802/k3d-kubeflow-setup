@@ -87,6 +87,15 @@ k3d cluster create kubeflow
 
 ## deploy kubeflow components from the downloaded manifest profile
 
+### install all at load
+Note: commented out pytorch, tf-job, mxnet, xgboost
+```
+while ! kustomize build example | kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done
+
+```
+
+
+### install component by component
 Run each  `kustomize`  command one at a time.  This takes 45+ minutes on a mid-2014
 MBP with 16GB RAM.
 
@@ -211,7 +220,7 @@ echo -e "\nkubeflow-user"; kubectl get pods -n kubeflow-user
 ## Port forward
 After establishing port forwarding, access kubeflow dashboard
 `http://localhost:8080`.  Good enough for local development work for an individual,
-not suitable for any other uses.
+not suitable for any other uses.  The default email address is `user@example.com` and the default password is `12341234`.
 ```
 kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
 
