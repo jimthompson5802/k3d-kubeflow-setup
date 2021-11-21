@@ -86,8 +86,18 @@ index 9459383c..d1e3195b 100644
 
 ## create k3d cluster
 ```
-# start a k3d cluster
+# create initial kubeflow k3d cluster
 k3d cluster create kubeflow
+```
+
+## manage k3d kubeflow Cluster
+```
+# stop running Cluster
+k3d cluster stop kubeflow
+
+# restart a stopped cluster, will take several minutes for all kubeflow services
+# to start.
+k3d cluster start kubeflow
 ```
 
 ## deploy kubeflow components from the downloaded manifest profile
