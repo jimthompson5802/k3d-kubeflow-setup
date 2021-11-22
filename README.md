@@ -87,7 +87,7 @@ index 9459383c..d1e3195b 100644
 ## create k3d cluster
 ```
 # create initial kubeflow k3d cluster
-k3d cluster create kubeflow
+k3d cluster create kubeflow -s 1 -a 1
 ```
 
 ## manage k3d kubeflow Cluster
@@ -107,6 +107,13 @@ Note: commented out pytorch, tf-job, mxnet, xgboost
 ```
 while ! kustomize build example | kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done
 
+```
+
+To monitor cluster start up
+```
+while true; do k-all-pods -A | grep -v Running | wc; sleep 10; done
+
+# When line count goes to 3, everything should be running
 ```
 
 
@@ -265,6 +272,11 @@ kubectl get pod  -l workflows.argoproj.io/completed=true --field-selector=status
 # to remove the pods
 kubectl delete pod  -l workflows.argoproj.io/completed=true --field-selector=status.phase==Succeeded
 
+```
+
+## URL for dockerhub registry
+```
+registry.hub.docker.com/<organization>/<image_repository>:<tag>
 ```
 
 
