@@ -1,0 +1,38 @@
+# Test creating custom image
+FROM registry.hub.docker.com/jupyter/datascience-notebook:latest
+
+ENV DASK_VERSION=2021.11.2
+USER 1000
+
+RUN conda install mamba -n base -c conda-forge --yes
+
+RUN PYTHON_VERSION=`python -V | cut -d " " -f 2` \
+  && mamba install --yes python=${PYTHON_VERSION} nomkl \
+    && mamba install --yes \
+    python-blosc \
+    cytoolz \
+    dask==${DASK_VERSION} \
+    lz4 \
+    numpy==1.21.1 \
+    pandas==1.3.0 \
+    ipywidgets \
+    cachey \
+    streamz \
+    dask-labextension>=5 \
+    && mamba clean -tipsy \
+    && jupyter lab clean \
+    && jlpm cache clean \
+    && npm cache clean --force \
+    && find /opt/conda/ -type f,l -name '*.a' -delete \
+    && find /opt/conda/ -type f,l -name '*.pyc' -delete \
+    && find /opt/conda/ -type f,l -name '*.js.map' -delete \
+    && (find /opt/conda/lib/python*/site-packages/bokeh/server/static -type f,l -name '*.js' -not -name '*.min.js' -delete || echo "no bokeh static files to cleanup") \
+    && rm -rf /opt/conda/pkgs
+
+RUN pip install dask-kubernetes jupyter-server-proxy
+
+WORKDIR /app
+
+COPY run_jupyterlab.sh /app
+
+CMD '/app/run_jupyterlab.sh'
