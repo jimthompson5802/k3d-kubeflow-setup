@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dask-worker
+  name: dask-worker
+  namespace: kubeflow-user
+  annotations:
+    sidecar.istio.io/inject: "false"
+spec:
+  selector:
+    matchLabels:
+      app: dask-worker
+      component: worker
+  replicas: 2 #number of worker pods
+  template:
+    metadata:
+      labels:
+        app: dask-worker
+        component: worker
+      annotations:
+        sidecar.istio.io/inject: "false"
+    spec:
+      serviceAccount: default-editor
+      # imagePullSecrets:
+      # - name: docker-registry-pull-secret
+      volumes:
+      - name: dask-worker-storage
+        persistentVolumeClaim:
+          claimName: dask-worker-storage
+      nodeSelector: {}
+      securityContext: {}
+      affinity: {}
+      tolerations: []
+      containers:
+      - name: dask-worker
+        imagePullPolicy: Always
+        image: registry.hub.docker.com/daskdev/dask:2021.11.2-py3.9
+        args:
+          - dask-worker
+          - dask-scheduler.kubeflow-user.svc.cluster.local:8786
+          - --nthreads
+          - "2"
+          - --memory-limit
+          - "1g"
+          - --no-dashboard
+        ports:
+          - containerPort: 8789
+        resources:
+          limits:
+            cpu: "12"
+            memory: 24G
+          requests:
+            cpu: "2"
+            memory: 1G
+        volumeMounts:
+          - name: dask-worker-storage
+            mountPath: /home/jovyan
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  # annotations:
+  #   volume.beta.kubernetes.io/storage-provisioner: rancher.io/local-path
+  #   volume.kubernetes.io/selected-node: k3d-kubeflow-agent-0
+  # finalizers:
+  # - kubernetes.io/pvc-protection
+  name: dask-worker-storage
+  namespace: kubeflow-user
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: local-path
+  # volumeMode: Filesystem
