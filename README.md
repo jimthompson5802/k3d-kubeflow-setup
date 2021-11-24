@@ -244,9 +244,11 @@ After establishing port forwarding, access kubeflow dashboard
 `http://localhost:8080`.  Good enough for local development work for an individual,
 not suitable for any other uses.  The default email address is `user@example.com` and the default password is `12341234`.
 ```
-kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
+# port forward to kubeflow dashboard
+kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80 &
 
-kubectl port-forward svc/dask-scheduler-ui -n kubeflow-user  9080:80
+# port foward for manually started dask scheduler ui
+kubectl port-forward svc/dask-scheduler-ui -n kubeflow-user  9080:80 &
 
 ```
 
