@@ -246,6 +246,8 @@ not suitable for any other uses.  The default email address is `user@example.com
 ```
 kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
 
+kubectl port-forward svc/dask-scheduler-ui -n kubeflow-user  9080:80
+
 ```
 
 ## Screenshot of using kubeflow in k3d cluster
