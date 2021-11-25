@@ -39,7 +39,7 @@ RUN PYTHON_VERSION=`python -V | cut -d " " -f 2` \
     && (find /opt/conda/lib/python*/site-packages/bokeh/server/static -type f,l -name '*.js' -not -name '*.min.js' -delete || echo "no bokeh static files to cleanup") \
     && rm -rf /opt/conda/pkgs
 
-RUN pip install dask-kubernetes dask-ml jupyter-server-proxy
+RUN pip install dask-kubernetes dask-ml tensorflow scikeras jupyter-server-proxy
 
 WORKDIR /app
 

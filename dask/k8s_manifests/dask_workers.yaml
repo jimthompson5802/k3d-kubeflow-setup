@@ -36,6 +36,9 @@ spec:
       - name: dask-worker
         imagePullPolicy: Always
         image: registry.hub.docker.com/daskdev/dask:2021.11.2-py3.9
+        env:
+          - name: EXTRA_PIP_PACKAGES
+            value: dask-ml tensorflow scikeras
         args:
           - dask-worker
           - dask-scheduler.kubeflow-user.svc.cluster.local:8786
