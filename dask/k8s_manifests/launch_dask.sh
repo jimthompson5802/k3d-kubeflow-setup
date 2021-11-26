@@ -141,6 +141,25 @@ spec:
     timeout: 300s
 EOF
 
+echo "Waiting for start of DASK Scheduler"
+while true
+do
+  num_ready=`kubectl get -l app=dask-scheduler deploy -o jsonpath='{.items[0].status.readyReplicas}'`
+  echo "number ready ${num_ready}"
+  if [[ $num_ready -eq 1 ]]
+  then
+    echo "all ready"
+    break
+  else
+    echo "not all ready, waiting"
+    sleep 5
+  fi
+done
+echo "DASK Scheduler Ready"
+
+dask_scheduler_ip=`kubectl get pod -l app=dask-scheduler -o jsonpath='{.items[0].status.podIP}'`
+echo ">>>DASK Scheduler running on IP Address: ${dask_scheduler_ip}"
+
 # start dask worker pods
 cat <<EOF | kubectl apply -f -
 apiVersion: apps/v1
@@ -194,3 +213,20 @@ spec:
             cpu: "2"
             memory: 2G
 EOF
+
+# wait for workers to start
+echo "Waiting for DASK Workers to start"
+while true
+do
+  num_ready=`kubectl get -l app=dask-workers deploy -o jsonpath='{.items[0].status.readyReplicas}'`
+  echo "number ready ${num_ready}"
+  if [[ $num_ready -eq ${number_workers} ]]
+  then
+    echo "all ready"
+    break
+  else
+    echo "not all ready, waiting"
+    sleep 5
+  fi
+done
+echo "DASK Workers ready"
