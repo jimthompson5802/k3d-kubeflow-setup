@@ -111,7 +111,7 @@ while ! kustomize build example | kubectl apply -f -; do echo "Retrying to apply
 
 To monitor cluster start up
 ```
-while true; do k-all-pods -A | grep -v Running | wc; sleep 10; done
+while true; do kubectl get pod -A | grep -v Running | wc; sleep 10; done
 
 # When line count goes to 3, everything should be running
 ```
