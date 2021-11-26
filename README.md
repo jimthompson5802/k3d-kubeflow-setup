@@ -266,6 +266,9 @@ kubectl port-forward svc/dask-scheduler-ui -n kubeflow-user  9080:80 &
 
 ![pipeline view 2](./images/pipeline-view-2.png)
 
+### DASK Scheduler UI
+![dask scheduler status](./images/dask1.png)
+![dask worker status](./images/dask2.png)
 
 ## Useful commands
 ### Remove completed kubeflow pipeline pods
