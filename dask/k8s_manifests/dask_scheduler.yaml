@@ -31,7 +31,8 @@ spec:
       containers:
       - name: dask-scheduler
         imagePullPolicy: Always
-        image: registry.hub.docker.com/daskdev/dask:2021.11.2-py3.9 #name of the image
+        # image: registry.hub.docker.com/daskdev/dask:2021.11.2-py3.9 #name of the image
+        image: registry.hub.docker.com/dsimages/dask_image:v6 #name of the image
         args:
           - dask-scheduler
           - --port

@@ -12,7 +12,7 @@ spec:
     matchLabels:
       app: dask-worker
       component: worker
-  replicas: 2 #number of worker pods
+  replicas: 6 #number of worker pods
   template:
     metadata:
       labels:
@@ -24,10 +24,10 @@ spec:
       serviceAccount: default-editor
       # imagePullSecrets:
       # - name: docker-registry-pull-secret
-      volumes:
-      - name: dask-worker-storage
-        persistentVolumeClaim:
-          claimName: dask-worker-storage
+      # volumes:
+      # - name: dask-worker-storage
+      #   persistentVolumeClaim:
+      #     claimName: dask-worker-storage
       nodeSelector: {}
       securityContext: {}
       affinity: {}
@@ -35,7 +35,8 @@ spec:
       containers:
       - name: dask-worker
         imagePullPolicy: Always
-        image: registry.hub.docker.com/daskdev/dask:2021.11.2-py3.9
+        # image: registry.hub.docker.com/daskdev/dask:2021.11.2-py3.9 #name of the image
+        image: registry.hub.docker.com/dsimages/dask_image:v6
         env:
           - name: EXTRA_PIP_PACKAGES
             value: dask-ml tensorflow scikeras
@@ -45,7 +46,7 @@ spec:
           - --nthreads
           - "2"
           - --memory-limit
-          - "1g"
+          - "2g"
           - --no-dashboard
         ports:
           - containerPort: 8789
@@ -55,28 +56,28 @@ spec:
             memory: 24G
           requests:
             cpu: "2"
-            memory: 1G
-        volumeMounts:
-          - name: dask-worker-storage
-            mountPath: /home/jovyan
+            memory: 2G
+        # volumeMounts:
+        #   - name: dask-worker-storage
+        #     mountPath: /home/jovyan
 
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  # annotations:
-  #   volume.beta.kubernetes.io/storage-provisioner: rancher.io/local-path
-  #   volume.kubernetes.io/selected-node: k3d-kubeflow-agent-0
-  # finalizers:
-  # - kubernetes.io/pvc-protection
-  name: dask-worker-storage
-  namespace: kubeflow-user
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
-  storageClassName: local-path
-  # volumeMode: Filesystem
+# ---
+#
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   # annotations:
+#   #   volume.beta.kubernetes.io/storage-provisioner: rancher.io/local-path
+#   #   volume.kubernetes.io/selected-node: k3d-kubeflow-agent-0
+#   # finalizers:
+#   # - kubernetes.io/pvc-protection
+#   name: dask-worker-storage
+#   namespace: kubeflow-user
+# spec:
+#   accessModes:
+#   - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 10Gi
+#   storageClassName: local-path
+#   # volumeMode: Filesystem
