@@ -87,7 +87,7 @@ index 9459383c..d1e3195b 100644
 ## create k3d cluster
 ```
 # create initial kubeflow k3d cluster
-k3d cluster create kubeflow -s 1 -a 1 -v ${PWD}:/opt/project@agent:0
+k3d cluster create kubeflow -s 1 -a 1 --k3s-arg "--disable=traefik@server:0"
 ```
 
 ## manage k3d kubeflow Cluster
