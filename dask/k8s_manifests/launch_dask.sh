@@ -142,6 +142,7 @@ spec:
 EOF
 
 echo "Waiting for start of DASK Scheduler"
+try_counter=0
 while true
 do
   num_ready=`kubectl get -l app=dask-scheduler deploy -o jsonpath='{.items[0].status.readyReplicas}'`
@@ -151,7 +152,8 @@ do
     echo "all ready"
     break
   else
-    echo "not all ready, waiting"
+    let "try_counter+=1"
+    echo "try ${try_counter}: dask scheduler not ready, waiting"
     sleep 5
   fi
 done
@@ -216,6 +218,7 @@ EOF
 
 # wait for workers to start
 echo "Waiting for DASK Workers to start"
+try_counter=0
 while true
 do
   num_ready=`kubectl get -l app=dask-workers deploy -o jsonpath='{.items[0].status.readyReplicas}'`
@@ -225,7 +228,8 @@ do
     echo "all ready"
     break
   else
-    echo "not all ready, waiting"
+    let "try_counter+=1"
+    echo "try ${try_counter}, not all workers ready, waiting"
     sleep 5
   fi
 done
