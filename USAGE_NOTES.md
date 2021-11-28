@@ -16,7 +16,8 @@
 ## Observation on MBP 2019 (8-core, 16 vcpu), 16GB RAM, SSD > 400GB Free
 * Install of kubeflow components went by much quicker, longest duration is for the kubeflow resources.  Took roughly 15 minutes for all pods in kubeflow namespace to achieve `Running` state.  Much of the start-up delay due to first time download of images.
 * Able to start up to 5 notebook servers with cpu=2 and memory=1Gi requests.
-* CPU utilization on a freshly created kubeflow according to MacOs Activity monitor is around 300%.
+* CPU utilization on freshly created `k3d` cluster according to MacOS Activity monitor is about 25% to 30%.
+* CPU utilization on a freshly created kubeflow according to MacOs Activity monitor is around 100% to 200%.
 * After running numerous ML workflows that created/deleted pods from a notebook server, very high cpu utilization in an idle cluster.  From MacOs Activity monitor `docker` is using > 1000% cpu.  From within the docker containers for `k3d`, `top` in the `k3d server` and `agent` containers:  `/bin/k3s` using 77% cpu in `server-0` container and only 1% utilization in `agent-0` container.
 ```
 #
