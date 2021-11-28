@@ -35,7 +35,6 @@ Load average: 2.63 7.96 7.39 3/3401 38670
  7042     1 0        S     697m   5%   0% /bin/containerd-shim-runc-v2 -namespace k8s.io -id 9d9bb0cfefcbb434ad27f6474642e7f907e2f59a8db
 12328  6167 65532    S     731m   5%   0% /ko-app/webhook
 
-
 #
 # top output k3d agent container, kubeflow freshly installed
 #
