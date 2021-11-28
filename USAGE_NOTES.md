@@ -18,6 +18,43 @@
 * Able to start up to 5 notebook servers with cpu=2 and memory=1Gi requests.
 * CPU utilization on freshly created `k3d` cluster according to MacOS Activity monitor is about 25% to 30%.
 * CPU utilization on a freshly created kubeflow according to MacOs Activity monitor is around 100% to 200%.
+```
+#
+# top output k3d server container, kubeflow freshly installed
+#
+Mem: 13130172K used, 167744K free, 211404K shrd, 524156K buff, 6174400K cached
+CPU:   2% usr   2% sys   0% nic  94% idle   0% io   0% irq   0% sirq
+Load average: 2.63 7.96 7.39 3/3401 38670
+  PID  PPID USER     STAT   VSZ %VSZ %CPU COMMAND
+    8     1 0        S    2248m  16%   4% /bin/k3s server
+  118     8 0        S    1027m   8%   0% containerd
+ 3227  1968 65532    S     800m   6%   0% /ko-app/webhook
+14092  4848 65532    S     736m   5%   0% /ko-app/controller
+11648  4721 65532    S     732m   5%   0% /ko-app/autoscaler
+ 3560  1769 1000     S     723m   5%   0% /app/cmd/webhook/webhook --v=2 --secure-port=10250 --dynamic-serving-ca-secret-namespace=cert-
+ 7042     1 0        S     697m   5%   0% /bin/containerd-shim-runc-v2 -namespace k8s.io -id 9d9bb0cfefcbb434ad27f6474642e7f907e2f59a8db
+12328  6167 65532    S     731m   5%   0% /ko-app/webhook
+
+
+#
+# top output k3d agent container, kubeflow freshly installed
+#
+Mem: 13135840K used, 162076K free, 211404K shrd, 524332K buff, 6178400K cached
+CPU:   3% usr   1% sys   0% nic  94% idle   0% io   0% irq   0% sirq
+Load average: 1.02 5.53 6.56 2/3389 37101
+  PID  PPID USER     STAT   VSZ %VSZ %CPU COMMAND
+    7     1 0        S     883m   6%   0% /bin/k3s agent
+   51     7 0        S     956m   7%   0% containerd
+ 2739  1842 65532    S     801m   6%   0% /ko-app/controller
+ 7335     1 0        S     697m   5%   0% /bin/containerd-shim-runc-v2 -namespace k8s.io -id 542f269b086da0de4aa0121105961473f4605db99a0
+19064 15582 1337     S     726m   5%   0% /usr/local/bin/pilot-agent proxy sidecar --domain kubeflow-user.svc.cluster.local --serviceClu
+ 4136  4085 1337     S     389m   3%   0% /usr/local/bin/envoy -c etc/istio/proxy/envoy-rev0.json --restart-epoch 0 --drain-time-s 45 --
+18826  7912 1337     S     727m   5%   0% /usr/local/bin/pilot-agent proxy sidecar --domain kubeflow.svc.cluster.local --serviceCluster
+14036  7335 999      S    2269m  17%   0% mysqld --datadir /var/lib/mysql/datadir
+ 2670  1480 0        S    1825m  13%   0% /usr/bin/metacontroller --logtostderr -v=4 --discovery-interval=20s
+ 4135  4078 1337     S     386m   3%   0% /usr/local/bin/envoy -c etc/istio/proxy/envoy-rev0.json --restart-epoch 0 --drain-time-s 45 --
+```
+
 * After running numerous ML workflows that created/deleted pods from a notebook server, very high cpu utilization in an idle cluster.  From MacOs Activity monitor `docker` is using > 1000% cpu.  From within the docker containers for `k3d`, `top` in the `k3d server` and `agent` containers:  `/bin/k3s` using 77% cpu in `server-0` container and only 1% utilization in `agent-0` container.
 ```
 #
