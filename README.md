@@ -86,7 +86,7 @@ index 9459383c..d1e3195b 100644
 ## deploy kubeflow components from the downloaded manifest profile
 
 ### install all at load
-Note: commented out pytorch, tf-job, mxnet, xgboost
+Note: commented out pytorch, mxnet, xgboost
 Position on `my_customization` branch in root directory for the `kubeflow-manifests`
 ```
 while ! kustomize build example | kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done
