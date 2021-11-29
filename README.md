@@ -191,21 +191,9 @@ kustomize build apps/tensorboard/tensorboards-web-app/upstream/overlays/istio | 
 kustomize build apps/tensorboard/tensorboard-controller/upstream/overlays/kubeflow | kubectl apply -f -
 
 
-# TFJob Operator
-kustomize build apps/tf-training/upstream/overlays/kubeflow | kubectl apply -f -
+# Training Operators
+kustomize build apps/training-operator/upstream/overlays/kubeflow | kubectl apply -f -
 
-
-# Pytorch Operator
-kustomize build apps/pytorch-job/upstream/overlays/kubeflow | kubectl apply -f -
-
-# MPI Operator
-kustomize build apps/mpi-job/upstream/overlays/kubeflow | kubectl apply -f -
-
-# MXNet Operator
-kustomize build apps/mxnet-job/upstream/overlays/kubeflow | kubectl apply -f -
-
-# xgboost Operator
-kustomize build apps/xgboost-job/upstream/overlays/kubeflow | kubectl apply -f -
 
 # kubeflow user namespace
 # modified profile name from kubeflow-user-example-com to kubeflow-user
