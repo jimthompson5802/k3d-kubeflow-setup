@@ -65,7 +65,7 @@ metadata:
 spec:
   ports:
     - name: dask-scheduler
-      protocol: TCP
+      appProtocol: tcp
       port: 8786
   selector:
     app: dask-scheduler
@@ -105,9 +105,9 @@ metadata:
   namespace: kubeflow-user
 spec:
   ports:
-  - name: http
+  - name: dask-scheduler-ui
     port: 80
-    protocol: TCP
+    appProtocol: http
     targetPort: 8787
   selector:
     app: dask-scheduler
