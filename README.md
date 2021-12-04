@@ -12,7 +12,7 @@ curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
 
 ## pre-reqs
 * Docker for Mac
-* `brew install`: `kubectl` and `kustomize` commands on Mac.
+* `brew install`: `kubectl` and `kustomize`  and `istioctl` commands on Mac.
 
 ```
 kustomize version
