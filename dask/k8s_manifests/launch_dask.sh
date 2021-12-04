@@ -3,7 +3,7 @@
 docker_repository='registry.hub.docker.com'
 dask_image='dsimages/dask_image'
 image_tag='v6'
-number_workers=6
+number_workers=3
 
 # launch dask scheduler
 cat <<EOF | kubectl apply -f -
@@ -14,8 +14,6 @@ metadata:
     app: dask-scheduler
   name: dask-scheduler
   namespace: kubeflow-user
-  annotations:
-    sidecar.istio.io/inject: "false"
 spec:
   selector:
     matchLabels:
@@ -171,8 +169,6 @@ metadata:
     app: dask-workers
   name: dask-workers
   namespace: kubeflow-user
-  annotations:
-    sidecar.istio.io/inject: "false"
 spec:
   selector:
     matchLabels:
