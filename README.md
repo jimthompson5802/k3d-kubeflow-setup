@@ -95,7 +95,7 @@ while ! kustomize build example | kubectl apply -f -; do echo "Retrying to apply
 
 To monitor install of kubeflow components, run following in another terminal window.
 ```
-while true; do kubectl get pod -A | grep -v Running | wc; sleep 10; done
+while true; do date; kubectl get pod -A | grep -v Running | wc; sleep 10; done
 
 # When line count goes to 1, everything should be running.  Takes about 20 to 25 minutes on MBP 2019.
 ```
