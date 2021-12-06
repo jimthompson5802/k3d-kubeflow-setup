@@ -26,9 +26,10 @@ Server Version: version.Info{Major:"1", Minor:"21", GitVersion:"v1.21.2+k3s1", G
 
 
 ## create k3d cluster
+Configuration file to create `kubeflow` cluster found in `k3d/kubeflow-cluster.yaml`.
 ```
-# create initial kubeflow k3d cluster
-k3d cluster create kubeflow -s 1 -a 1 --k3s-arg "--disable=traefik@server:0"
+# create local kubernetes cluster
+k3d cluster create --config k3d/kubeflow-cluster.yaml
 ```
 
 ## manage k3d kubeflow Cluster
@@ -41,7 +42,7 @@ k3d cluster stop kubeflow
 k3d cluster start kubeflow
 ```
 
-## clone my fork of kubeflow/manifests repo
+## clone my fork of kubeflow/manifests repo to install kubeflow components
 ```
 # clone kubeflow manifest repo
 

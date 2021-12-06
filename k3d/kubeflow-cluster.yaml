@@ -1,0 +1,11 @@
+apiVersion: k3d.io/v1alpha3
+kind: Simple
+name: kubeflow
+servers: 1
+agents: 1
+options:
+  k3s:
+    extraArgs:
+      - arg: --disable=traefik
+        nodeFilters:
+          - server:*
