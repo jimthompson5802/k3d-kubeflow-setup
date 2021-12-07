@@ -56,23 +56,7 @@ summary of changes.
 Jim-MacBook-Pro:jim kubeflow-manifests[524]$ git status
 On branch my_customizations
 nothing to commit, working tree clean
-Jim-MacBook-Pro:jim kubeflow-manifests[525]$ git diff master
-diff --git a/common/dex/base/deployment.yaml b/common/dex/base/deployment.yaml
-index eca0a30a..a0972dc3 100644
---- a/common/dex/base/deployment.yaml
-+++ b/common/dex/base/deployment.yaml
-@@ -28,6 +28,11 @@ spec:
-         envFrom:
-           - secretRef:
-               name: dex-oidc-client
-+        env:
-+          - name: KUBERNETES_POD_NAMESPACE
-+            valueFrom:
-+              fieldRef:
-+                fieldPath: metadata.namespace
-       volumes:
-       - name: config
-         configMap:
+git diff master | cat -
 diff --git a/common/user-namespace/base/params.env b/common/user-namespace/base/params.env
 index 9459383c..d1e3195b 100644
 --- a/common/user-namespace/base/params.env
@@ -81,6 +65,37 @@ index 9459383c..d1e3195b 100644
  user=user@example.com
 -profile-name=kubeflow-user-example-com
 +profile-name=kubeflow-user
+diff --git a/example/kustomization.yaml b/example/kustomization.yaml
+index 6d6e23b4..2d20a18f 100644
+--- a/example/kustomization.yaml
++++ b/example/kustomization.yaml
+@@ -26,7 +26,7 @@ resources:
+
+
+ # Kubeflow Pipelines
+-- ../apps/pipeline/upstream/env/platform-agnostic-multi-user
++- ../apps/pipeline/upstream/env/platform-agnostic-multi-user-pns
+ # KFServing
+ - ../apps/kfserving/upstream/overlays/kubeflow
+ # Katib
+@@ -43,13 +43,14 @@ resources:
+ - ../apps/profiles/upstream/overlays/kubeflow
+ # Volumes Web App
+ - ../apps/volumes-web-app/upstream/overlays/istio
+-# Tensorboards Controller
++# Tensorboards Web App
+ -  ../apps/tensorboard/tensorboard-controller/upstream/overlays/kubeflow
+-# Tensorboard Web App
++# Tensorboard Controller
+ -  ../apps/tensorboard/tensorboards-web-app/upstream/overlays/istio
+ # Training Operator
+ - ../apps/training-operator/upstream/overlays/kubeflow
+ # MPI Operator
+-- ../apps/mpi-job/upstream/overlays/kubeflow
++#- ../apps/mpi-job/upstream/overlays/kubeflow
++
+ # User namespace
+ - ../common/user-namespace/base
 
 ```
 
