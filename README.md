@@ -106,7 +106,7 @@ index 6d6e23b4..2d20a18f 100644
 ## deploy kubeflow components from the downloaded manifest profile
 
 ### install all at load
-Note: commented out pytorch, mxnet, xgboost in the manifest build
+Note: commented out pytorch, mxnet, xgboost in the manifest build.  
 Read `kubeflow/README.md` and follow instructions.
 ```
 ./kubeflow/install_kubeflow.sh
