@@ -16,7 +16,7 @@ git clone https://github.com/jimthompson5802/manifests.git
 ## Software versions
 
 ### Docker
-**Docker Desktop for Mac 4.2.0**.  This version is required because it implements cgroup v1.  Docker Desktop implementes cgruoup v2, which causes several kubeflow components install to fail in a `k3d` cluster with **too many open files** error.
+**Docker Desktop for Mac 4.2.0**.  This version is required because it implements cgroup v1.  Docker Desktop 4.3.0+ implements cgruoup v2, which causes several kubeflow components install to fail in a `k3d` cluster with **too many open files** error.
 
 ```
 $ docker version
