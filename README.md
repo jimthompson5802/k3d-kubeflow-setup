@@ -12,9 +12,9 @@ curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
 
 ## pre-reqs
 * Docker for Mac 4.2.0  **Must be this version** Later versions cause issues with `kubeflow` install
-* `brew install`: `istioctl` 
+* `brew install`: `istioctl`
 * MacPort install of `kubectl`
-* Manual download of `kustomize` for v3.2.0 from gh repo: https://github.com/kubernetes-sigs/kustomize/releases/tag/v3.2.0   
+* Manual download of `kustomize` for v3.2.0 ([per this instruction](https://github.com/kubeflow/manifests#prerequisites)) from gh repo: https://github.com/kubernetes-sigs/kustomize/releases/tag/v3.2.0   
   (checksum:  c7991a79470a52a95f1fac33f588b76f64e597ac64b54106e452f3a8f642c62e  kustomize_3.2.0_darwin_amd64)
 
 
