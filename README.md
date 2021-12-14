@@ -11,8 +11,12 @@ curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
 ```
 
 ## pre-reqs
-* Docker for Mac
-* `brew install`: `kubectl` and `kustomize`  and `istioctl` commands on Mac.
+* Docker for Mac 4.2.0  **Must be this version** Later versions cause issues with `kubeflow` install
+* `brew install`: `istioctl` 
+* MacPort install of `kubectl`
+* Manual download of `kustomize` for v3.2.0 from gh repo: https://github.com/kubernetes-sigs/kustomize/releases/tag/v3.2.0   
+  (checksum:  c7991a79470a52a95f1fac33f588b76f64e597ac64b54106e452f3a8f642c62e  kustomize_3.2.0_darwin_amd64)
+
 
 ```
 kustomize version
@@ -102,18 +106,16 @@ index 6d6e23b4..2d20a18f 100644
 ## deploy kubeflow components from the downloaded manifest profile
 
 ### install all at load
-Note: commented out pytorch, mxnet, xgboost
-Position on `my_customization` branch in root directory for the `kubeflow-manifests`
+Note: commented out pytorch, mxnet, xgboost in the manifest build
 ```
-while ! kustomize build example | kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done
-
+./kubeflow/install_kubeflow.sh
 ```
 
 To monitor install of kubeflow components, run following in another terminal window.
 ```
-while true; do date; kubectl get pod -A | grep -v Running | wc; sleep 10; done
+while true; do date; kubectl get pod -A | grep -v Running | grep -v NAME | wc -l; sleep 10; done
 
-# When line count goes to 1, everything should be running.  Takes about 20 to 25 minutes on MBP 2019.
+# When line count goes to 0, everything should be running.  Takes about 20 to 25 minutes on MBP 2019.
 ```
 
 
