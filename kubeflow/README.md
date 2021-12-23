@@ -12,6 +12,16 @@ git clone https://github.com/jimthompson5802/manifests.git
 
 * run `install_kubeflow.sh`
 
+## Cluster shutdown
+This script first "pauses" the docker containers then issues `k3d cluster stop` command
+```
+./shutdown_cluster.sh
+```
+
+## Cluster restart
+```
+k3d cluster start kubeflow 
+```
 
 ## Software versions
 
