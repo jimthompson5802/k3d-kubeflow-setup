@@ -6,6 +6,11 @@ image: rancher/k3s:v1.21.7-k3s1     # eventual high cpu load issue, drains batte
 # image: rancher/k3s:v1.20.14-k3s1  # high cpu load drains battery
 servers: 1
 agents: 1
+# expose k3d loadbalancer to outside of k3d container
+ports:
+  - port: 8080:80
+    nodeFilters:
+      - loadbalancer
 options:
   k3s:
     extraArgs:
