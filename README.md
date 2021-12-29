@@ -229,8 +229,26 @@ echo -e "\nkubeflow"; kubectl get pods -n kubeflow
 echo -e "\nkubeflow-user"; kubectl get pods -n kubeflow-user
 
 ```
+## Connecting to the kubeflow cluster
 
-## Port forward
+### Using the `k3d` LoadBalancer
+If `kubeflow` cluster config (`k3d/kubeflow-cluster.yaml`) contains port mapping to `k3d` load balancer, 
+``` 
+# expose k3d loadbalancer to outside of k3d container
+ports:
+  - port: 8080:80
+    nodeFilters:
+      - loadbalancer
+```
+
+then change `istio-ingressgateway` Service from `type: NodePort` to `type: LoadBalancer`
+```
+kubectl patch svc istio-ingressgateway -n istio-system -p '{"spec":{"type":"LoadBalancer"}}'
+```
+this will allowing using this url in the browser to connect `http://localhost:8080`.
+
+
+### Port forward (Alternative method)
 After establishing port forwarding, access kubeflow dashboard
 `http://localhost:8080`.  Good enough for local development work for an individual,
 not suitable for any other uses.  The default email address is `user@example.com` and the default password is `12341234`.
@@ -240,7 +258,6 @@ kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80 &
 
 # port foward for manually started dask scheduler ui
 kubectl port-forward svc/dask-scheduler-ui -n kubeflow-user  9080:80 &
-
 ```
 
 ## Screenshot of using kubeflow in k3d cluster
