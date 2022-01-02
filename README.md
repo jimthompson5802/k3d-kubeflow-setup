@@ -232,11 +232,11 @@ echo -e "\nkubeflow-user"; kubectl get pods -n kubeflow-user
 ## Connecting to the kubeflow cluster
 
 ### Using the `k3d` LoadBalancer
-If `kubeflow` cluster config (`k3d/kubeflow-cluster.yaml`) contains port mapping to `k3d` load balancer, 
-``` 
+If `kubeflow` cluster config (`k3d/kubeflow-cluster.yaml`) contains port mapping to `k3d` load balancer,
+```
 # expose k3d loadbalancer to outside of k3d container
 ports:
-  - port: 8080:80
+  - port: 7080:80
     nodeFilters:
       - loadbalancer
 ```
@@ -245,7 +245,7 @@ then change `istio-ingressgateway` Service from `type: NodePort` to `type: LoadB
 ```
 kubectl patch svc istio-ingressgateway -n istio-system -p '{"spec":{"type":"LoadBalancer"}}'
 ```
-this will allowing using this url in the browser to connect `http://localhost:8080`.
+this will allowing using this url in the browser to connect `http://localhost:7080`.
 
 
 ### Port forward (Alternative method)

@@ -8,9 +8,14 @@ servers: 1
 agents: 1
 # expose k3d loadbalancer to outside of k3d container
 ports:
-  - port: 8080:80
+  - port: 7080:80
     nodeFilters:
       - loadbalancer
+  - port: 8787:8787
+    nodeFilters:
+      - loadbalancer
+      - server:*
+      - agent:*
 options:
   k3s:
     extraArgs:
